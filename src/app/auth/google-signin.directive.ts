@@ -21,7 +21,13 @@ export class GoogleSignInDirective {
       .auth()
       .signInWithPopup(provider)
       .then((itemsEvent) => console.log('itemsEvent: ', itemsEvent))
-      .catch((error) => console.log('error', error));
+      .catch((error) => {
+        console.log('error', error);
+
+        if (error.code === 'auth/web-storage-unsupported') {
+          console.log('Заблокированы сторонние куки');
+        }
+      });
   }
 }
 
