@@ -1,3 +1,4 @@
+<!--
 <mat-card class="mat-form-field">
 
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate >
@@ -25,3 +26,14 @@
   </form>
 
 </mat-card>
+-->
+
+<button mat-raised-button appGoogleSignIn> Login with Google </button>
+<button mat-stroked-button appGoogleSignOut>Logout</button>
+
+<ul>
+  <li class="text" *ngFor="let item of users | async">
+    {{item | json}}
+  </li>
+</ul>
+

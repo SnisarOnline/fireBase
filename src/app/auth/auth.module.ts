@@ -3,17 +3,21 @@ import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {RouterModule, Routes} from '@angular/router';
+import {AngularFireModule} from '@angular/fire';
+import {AngularFirestore} from '@angular/fire/firestore';
+import {AngularFireAuth} from '@angular/fire/auth';
+import {environment as env} from '../../environments/environment';
 
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS} from '@angular/material/snack-bar'; // https://material.angular.io/components/snack-bar
 
-// import {ErrorInterceptor, JwtInterceptor} from '../../core/_base';
 import {AuthComponent} from './auth.component';
 import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
 import {AuthService} from './auth.service';
+import {GoogleSignInDirective, GoogleSignOutDirective} from './google-signin.directive';
 
 
 const routes: Routes = [
@@ -36,22 +40,22 @@ const routes: Routes = [
     FormsModule, ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forChild(routes),
+    AngularFireModule.initializeApp(env.fireBase),
     MatCardModule, MatInputModule, MatButtonModule, MatSnackBarModule,
   ],
+  exports: [GoogleSignInDirective, GoogleSignOutDirective, AuthComponent],
+  declarations: [
+    GoogleSignInDirective, GoogleSignOutDirective, AuthComponent,
+    LoginComponent, RegisterComponent,
+  ],
   providers: [
-    AuthService,
+    AuthService, AngularFireModule, AngularFirestore, AngularFireAuth,
     {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {
         duration: 2500,
         verticalPosition: 'bottom',
         horizontalPosition: 'center'
       }}
   ],
-  exports: [AuthComponent],
-  declarations: [
-    AuthComponent,
-    LoginComponent,
-    RegisterComponent
-  ]
 })
 
 export class AuthModule {

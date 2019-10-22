@@ -4,8 +4,9 @@ import {NotesListComponent} from './notes-list/notes-list.component';
 
 
 const routes: Routes = [
-  {path: '', component: NotesListComponent},
+  {path: 'list', component: NotesListComponent},
   {path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) },
+  {path: '', redirectTo: '/auth', pathMatch: 'full'},
 ];
 
 @NgModule({
